@@ -43,7 +43,7 @@ public class Post implements Serializable {
     @Column(name = "date", nullable = false)
     private ZonedDateTime date = ZonedDateTime.now();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "post_tag",
                joinColumns = @JoinColumn(name="posts_id", referencedColumnName="ID"),
