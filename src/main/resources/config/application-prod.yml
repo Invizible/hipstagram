@@ -32,9 +32,13 @@ spring:
             hibernate.generate_statistics: false
             hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
     data:
-        elasticsearch:
-            cluster-name:
-            cluster-nodes: localhost:9300
+       elasticsearch:
+           cluster-name:
+           cluster-nodes:
+           properties:
+               path:
+                 logs: target/elasticsearch/log
+                 data: target/elasticsearch/data
     mail:
         host: localhost
         port: 25
