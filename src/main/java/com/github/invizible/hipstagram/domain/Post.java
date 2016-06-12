@@ -54,7 +54,7 @@ public class Post implements Serializable {
     @NotNull
     private User author;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "post_likes",
                joinColumns = @JoinColumn(name="posts_id", referencedColumnName="ID"),

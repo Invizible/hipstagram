@@ -5,9 +5,9 @@
         .module('hipstagramApp')
         .controller('PostController', PostController);
 
-    PostController.$inject = ['$scope', '$state', 'DataUtils', 'Post', 'PostSearch', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants', 'Principal'];
+    PostController.$inject = ['$scope', '$state', 'DataUtils', 'Post', 'PostSearch', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants', 'Principal', 'User'];
 
-    function PostController ($scope, $state, DataUtils, Post, PostSearch, ParseLinks, AlertService, pagingParams, paginationConstants, Principal) {
+    function PostController ($scope, $state, DataUtils, Post, PostSearch, ParseLinks, AlertService, pagingParams, paginationConstants, Principal, User) {
         var vm = this;
         
         vm.loadPage = loadPage;
@@ -20,6 +20,7 @@
         vm.currentSearch = pagingParams.search;
         vm.openFile = DataUtils.openFile;
         vm.byteSize = DataUtils.byteSize;
+        vm.like = like;
 
         Principal.identity().then(function(account) {
             vm.currentAccount = account;
@@ -93,6 +94,15 @@
             vm.reverse = true;
             vm.currentSearch = null;
             vm.transition();
+        }
+
+        function like(post) {
+            User.get({login: vm.currentAccount.login}, function (currentUser) {
+                if (!_.find(post.likes, {id: currentUser.id})) {
+                    post.likes.push(currentUser);
+                    Post.update(post);
+                }
+            });
         }
     }
 })();
