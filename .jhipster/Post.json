@@ -1,0 +1,59 @@
+{
+    "relationships": [
+        {
+            "relationshipName": "tag",
+            "otherEntityName": "tag",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "name",
+            "ownerSide": true
+        },
+        {
+            "relationshipName": "author",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "login"
+        },
+        {
+            "relationshipName": "likes",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "login",
+            "ownerSide": true
+        },
+        {
+            "relationshipName": "comment",
+            "otherEntityName": "comment",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "post"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "text",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "photo",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "date",
+            "fieldType": "ZonedDateTime",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20160612135327",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "post",
+    "pagination": "pager"
+}
