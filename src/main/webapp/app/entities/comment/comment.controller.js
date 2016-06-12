@@ -23,17 +23,19 @@
 
         function loadAll () {
             if (pagingParams.search) {
-                CommentSearch.query({
+                CommentSearch.queryByPostId({
                     query: pagingParams.search,
                     page: pagingParams.page - 1,
                     size: paginationConstants.itemsPerPage,
-                    sort: sort()
+                    sort: sort(),
+                    postId: post.id
                 }, onSuccess, onError);
             } else {
-                Comment.query({
+                Comment.queryByPostId({
                     page: pagingParams.page - 1,
                     size: paginationConstants.itemsPerPage,
-                    sort: sort()
+                    sort: sort(),
+                    postId: post.id
                 }, onSuccess, onError);
             }
             function sort() {

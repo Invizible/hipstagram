@@ -8,6 +8,8 @@ import com.github.invizible.hipstagram.repository.search.CommentSearchRepository
 import com.github.invizible.hipstagram.security.SecurityUtils;
 import com.github.invizible.hipstagram.web.rest.util.HeaderUtil;
 import com.github.invizible.hipstagram.web.rest.util.PaginationUtil;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
+import static org.elasticsearch.index.query.QueryBuilders.boolQuery;
+import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 /**
@@ -113,6 +117,18 @@ public class CommentResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/comments/post/{postId}",
+      method = RequestMethod.GET,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Comment>> getAllCommentsForPost(@PathVariable Long postId, Pageable pageable)
+      throws URISyntaxException {
+        log.debug("REST request to get a page of Comments");
+        Page<Comment> page = commentRepository.findAllByPostId(postId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/comments");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
     /**
      * GET  /comments/:id : get the "id" comment.
      *
@@ -165,6 +181,20 @@ public class CommentResource {
         throws URISyntaxException {
         log.debug("REST request to search for a page of Comments for query {}", query);
         Page<Comment> page = commentSearchRepository.search(queryStringQuery(query), pageable);
+        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/comments");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/_search/comments/post/{postId}",
+      method = RequestMethod.GET,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<Comment>> searchCommentsForPost(@PathVariable Long postId, @RequestParam String query, Pageable pageable)
+      throws URISyntaxException {
+        log.debug("REST request to search for a page of Comments for query {}", query);
+        QueryStringQueryBuilder queryBuilder = queryStringQuery(query);
+        BoolQueryBuilder searchForPostQuery = boolQuery().must(queryBuilder).must(matchQuery("post.id", postId));
+        Page<Comment> page = commentSearchRepository.search(searchForPostQuery, pageable);
         HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/comments");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
