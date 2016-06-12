@@ -5,9 +5,9 @@
         .module('hipstagramApp')
         .controller('PostController', PostController);
 
-    PostController.$inject = ['$scope', '$state', 'DataUtils', 'Post', 'PostSearch', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
+    PostController.$inject = ['$scope', '$state', 'DataUtils', 'Post', 'PostSearch', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants', 'Principal'];
 
-    function PostController ($scope, $state, DataUtils, Post, PostSearch, ParseLinks, AlertService, pagingParams, paginationConstants) {
+    function PostController ($scope, $state, DataUtils, Post, PostSearch, ParseLinks, AlertService, pagingParams, paginationConstants, Principal) {
         var vm = this;
         
         vm.loadPage = loadPage;
@@ -20,6 +20,10 @@
         vm.currentSearch = pagingParams.search;
         vm.openFile = DataUtils.openFile;
         vm.byteSize = DataUtils.byteSize;
+
+        Principal.identity().then(function(account) {
+            vm.currentAccount = account;
+        });
 
         loadAll();
 

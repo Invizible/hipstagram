@@ -57,7 +57,7 @@
                     <td>
                         {{post.author.login}}
                     </td>
-                    <td class="text-right">
+                    <td class="text-right" ng-show="vm.currentAccount.login==post.author.login">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
                                     ui-sref="post-detail.comment({postId:post.id})"
