@@ -1,0 +1,12 @@
+version: '2'
+services:
+    hipstagram-postgresql:
+        container_name: hipstagram-postgresql
+        image: postgres:9.5.2
+        # volumes:
+        #     - ~/volumes/jhipster/hipstagram/postgresql/:/var/lib/postgresql/
+        environment:
+            - POSTGRES_USER=hipstagram
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432
