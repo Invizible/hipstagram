@@ -11,7 +11,7 @@
         $stateProvider
         .state('post', {
             parent: 'entity',
-            url: '/post?page&sort&search',
+            url: '/?page&sort&search',
             data: {
                 authorities: ['ROLE_USER'],
                 pageTitle: 'hipstagramApp.post.home.title'
@@ -53,7 +53,7 @@
         })
         .state('post-detail', {
             parent: 'entity',
-            url: '/post/{id}',
+            url: '/post/{postId}',
             data: {
                 authorities: ['ROLE_USER'],
                 pageTitle: 'hipstagramApp.post.detail.title'
@@ -70,8 +70,8 @@
                     $translatePartialLoader.addPart('post');
                     return $translate.refresh();
                 }],
-                entity: ['$stateParams', 'Post', function($stateParams, Post) {
-                    return Post.get({id : $stateParams.id}).$promise;
+                post: ['$stateParams', 'Post', function($stateParams, Post) {
+                    return Post.get({id : $stateParams.postId}).$promise;
                 }]
             }
         })
@@ -89,7 +89,7 @@
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
-                        entity: function () {
+                        post: function () {
                             return {
                                 text: null,
                                 photo: null,
@@ -108,7 +108,7 @@
         })
         .state('post.edit', {
             parent: 'post',
-            url: '/{id}/edit',
+            url: '/{postId}/edit',
             data: {
                 authorities: ['ROLE_USER']
             },
@@ -120,8 +120,8 @@
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
-                        entity: ['Post', function(Post) {
-                            return Post.get({id : $stateParams.id}).$promise;
+                        post: ['Post', function(Post) {
+                            return Post.get({id : $stateParams.postId}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -133,7 +133,7 @@
         })
         .state('post.delete', {
             parent: 'post',
-            url: '/{id}/delete',
+            url: '/{postId}/delete',
             data: {
                 authorities: ['ROLE_USER']
             },
@@ -144,8 +144,8 @@
                     controllerAs: 'vm',
                     size: 'md',
                     resolve: {
-                        entity: ['Post', function(Post) {
-                            return Post.get({id : $stateParams.id}).$promise;
+                        post: ['Post', function(Post) {
+                            return Post.get({id : $stateParams.postId}).$promise;
                         }]
                     }
                 }).result.then(function() {

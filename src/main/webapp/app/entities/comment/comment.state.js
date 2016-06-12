@@ -9,15 +9,14 @@
 
     function stateConfig($stateProvider) {
         $stateProvider
-        .state('comment', {
-            parent: 'entity',
+        .state('post-detail.comment', {
             url: '/comment?page&sort&search',
             data: {
                 authorities: ['ROLE_USER'],
                 pageTitle: 'hipstagramApp.comment.home.title'
             },
             views: {
-                'content@': {
+                'comments': {
                     templateUrl: 'app/entities/comment/comments.html',
                     controller: 'CommentController',
                     controllerAs: 'vm'
@@ -51,32 +50,8 @@
                 }]
             }
         })
-        .state('comment-detail', {
-            parent: 'entity',
-            url: '/comment/{id}',
-            data: {
-                authorities: ['ROLE_USER'],
-                pageTitle: 'hipstagramApp.comment.detail.title'
-            },
-            views: {
-                'content@': {
-                    templateUrl: 'app/entities/comment/comment-detail.html',
-                    controller: 'CommentDetailController',
-                    controllerAs: 'vm'
-                }
-            },
-            resolve: {
-                translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                    $translatePartialLoader.addPart('comment');
-                    return $translate.refresh();
-                }],
-                entity: ['$stateParams', 'Comment', function($stateParams, Comment) {
-                    return Comment.get({id : $stateParams.id}).$promise;
-                }]
-            }
-        })
-        .state('comment.new', {
-            parent: 'comment',
+        .state('comment-new', {
+            parent: 'post-detail.comment',
             url: '/new',
             data: {
                 authorities: ['ROLE_USER']
@@ -89,7 +64,7 @@
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
-                        entity: function () {
+                        comment: function () {
                             return {
                                 text: null,
                                 date: null,
@@ -98,15 +73,15 @@
                         }
                     }
                 }).result.then(function() {
-                    $state.go('comment', null, { reload: true });
+                    $state.go('post-detail.comment', null, { reload: true });
                 }, function() {
-                    $state.go('comment');
+                    $state.go('post-detail.comment');
                 });
             }]
         })
-        .state('comment.edit', {
-            parent: 'comment',
-            url: '/{id}/edit',
+        .state('comment-edit', {
+            parent: 'post-detail.comment',
+            url: '/{commentId}/edit',
             data: {
                 authorities: ['ROLE_USER']
             },
@@ -118,20 +93,20 @@
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
-                        entity: ['Comment', function(Comment) {
-                            return Comment.get({id : $stateParams.id}).$promise;
+                        comment: ['Comment', function(Comment) {
+                            return Comment.get({id : $stateParams.commentId}).$promise;
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('comment', null, { reload: true });
+                    $state.go('post-detail.comment', null, { reload: true });
                 }, function() {
                     $state.go('^');
                 });
             }]
         })
-        .state('comment.delete', {
-            parent: 'comment',
-            url: '/{id}/delete',
+        .state('comment-delete', {
+            parent: 'post-detail.comment',
+            url: '/{commentId}/delete',
             data: {
                 authorities: ['ROLE_USER']
             },
@@ -142,12 +117,12 @@
                     controllerAs: 'vm',
                     size: 'md',
                     resolve: {
-                        entity: ['Comment', function(Comment) {
-                            return Comment.get({id : $stateParams.id}).$promise;
+                        comment: ['Comment', function(Comment) {
+                            return Comment.get({id : $stateParams.commentId}).$promise;
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('comment', null, { reload: true });
+                    $state.go('post-detail.comment', null, { reload: true });
                 }, function() {
                     $state.go('^');
                 });

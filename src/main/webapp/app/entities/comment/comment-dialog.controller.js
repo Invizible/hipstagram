@@ -5,12 +5,12 @@
         .module('hipstagramApp')
         .controller('CommentDialogController', CommentDialogController);
 
-    CommentDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Comment', 'Post', 'User'];
+    CommentDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'comment', 'Comment', 'Post', 'User'];
 
-    function CommentDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Comment, Post, User) {
+    function CommentDialogController ($timeout, $scope, $stateParams, $uibModalInstance, comment, Comment, Post, User) {
         var vm = this;
 
-        vm.comment = entity;
+        vm.comment = comment;
         vm.clear = clear;
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;

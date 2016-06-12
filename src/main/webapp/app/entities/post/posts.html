@@ -45,7 +45,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="post in vm.posts track by post.id">
-                    <td><a ui-sref="post-detail({id:post.id})">{{post.id}}</a></td>
+                    <td><a ui-sref="post-detail({postId:post.id})">{{post.id}}</a></td>
                     <td>{{post.text}}</td>
                     <td>
                         <a ng-if="post.photo" ng-click="vm.openFile(post.photoContentType, post.photo)">
@@ -60,19 +60,19 @@
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
-                                    ui-sref="post-detail({id:post.id})"
+                                    ui-sref="post-detail.comment({postId:post.id})"
                                     class="btn btn-info btn-sm">
                                 <span class="glyphicon glyphicon-eye-open"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
                             </button>
                             <button type="submit"
-                                    ui-sref="post.edit({id:post.id})"
+                                    ui-sref="post.edit({postId:post.id})"
                                     class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
                             </button>
                             <button type="submit"
-                                    ui-sref="post.delete({id:post.id})"
+                                    ui-sref="post.delete({postId:post.id})"
                                     class="btn btn-danger btn-sm">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>

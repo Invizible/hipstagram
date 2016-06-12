@@ -5,9 +5,9 @@
         .module('hipstagramApp')
         .controller('CommentController', CommentController);
 
-    CommentController.$inject = ['$scope', '$state', 'Comment', 'CommentSearch', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
+    CommentController.$inject = ['$scope', '$state', 'Comment', 'CommentSearch', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants', 'post'];
 
-    function CommentController ($scope, $state, Comment, CommentSearch, ParseLinks, AlertService, pagingParams, paginationConstants) {
+    function CommentController ($scope, $state, Comment, CommentSearch, ParseLinks, AlertService, pagingParams, paginationConstants, post) {
         var vm = this;
         
         vm.loadPage = loadPage;
@@ -64,7 +64,8 @@
             $state.transitionTo($state.$current, {
                 page: vm.page,
                 sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
-                search: vm.currentSearch
+                search: vm.currentSearch,
+                postId: post.id
             });
         }
 

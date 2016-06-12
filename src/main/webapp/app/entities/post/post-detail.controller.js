@@ -5,12 +5,12 @@
         .module('hipstagramApp')
         .controller('PostDetailController', PostDetailController);
 
-    PostDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'DataUtils', 'entity', 'Post', 'Tag', 'User', 'Comment'];
+    PostDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'DataUtils', 'post', 'Post', 'Tag', 'User', 'Comment'];
 
-    function PostDetailController($scope, $rootScope, $stateParams, DataUtils, entity, Post, Tag, User, Comment) {
+    function PostDetailController($scope, $rootScope, $stateParams, DataUtils, post, Post, Tag, User, Comment) {
         var vm = this;
 
-        vm.post = entity;
+        vm.post = post;
         vm.byteSize = DataUtils.byteSize;
         vm.openFile = DataUtils.openFile;
 

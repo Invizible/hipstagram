@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-4 no-padding-left">
-                <button class="btn btn-primary" ui-sref="comment.new" >
+                <button class="btn btn-primary" ui-sref="comment-new" >
                     <span class="glyphicon glyphicon-plus"></span>
                     <span class="hidden-xs"  translate="hipstagramApp.comment.home.createLabel">
                         Create new Comment
@@ -45,11 +45,11 @@
             </thead>
             <tbody>
                 <tr ng-repeat="comment in vm.comments track by comment.id">
-                    <td><a ui-sref="comment-detail({id:comment.id})">{{comment.id}}</a></td>
+                    <td><a ui-sref="comment-detail({commentId:comment.id})">{{comment.id}}</a></td>
                     <td>{{comment.text}}</td>
                     <td>{{comment.date | date:'medium'}}</td>
                     <td>
-                        <a ui-sref="post-detail({id:comment.post.id})">{{comment.post.id}}</a>
+                        <a ui-sref="post-detail({commentId:comment.post.id})">{{comment.post.id}}</a>
                     </td>
                     <td>
                         {{comment.author.login}}
@@ -57,19 +57,13 @@
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
-                                    ui-sref="comment-detail({id:comment.id})"
-                                    class="btn btn-info btn-sm">
-                                <span class="glyphicon glyphicon-eye-open"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="comment.edit({id:comment.id})"
+                                    ui-sref="comment-edit({commentId:comment.id})"
                                     class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
                             </button>
                             <button type="submit"
-                                    ui-sref="comment.delete({id:comment.id})"
+                                    ui-sref="comment-delete({commentId:comment.id})"
                                     class="btn btn-danger btn-sm">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>

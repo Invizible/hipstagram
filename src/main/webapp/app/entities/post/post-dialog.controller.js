@@ -5,12 +5,12 @@
         .module('hipstagramApp')
         .controller('PostDialogController', PostDialogController);
 
-    PostDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'entity', 'Post', 'Tag', 'User', 'Comment'];
+    PostDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'DataUtils', 'post', 'Post', 'Tag', 'User', 'Comment'];
 
-    function PostDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, entity, Post, Tag, User, Comment) {
+    function PostDialogController ($timeout, $scope, $stateParams, $uibModalInstance, DataUtils, post, Post, Tag, User, Comment) {
         var vm = this;
 
-        vm.post = entity;
+        vm.post = post;
         vm.clear = clear;
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;

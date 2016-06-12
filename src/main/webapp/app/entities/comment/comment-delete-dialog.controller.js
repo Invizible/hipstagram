@@ -5,12 +5,12 @@
         .module('hipstagramApp')
         .controller('CommentDeleteController',CommentDeleteController);
 
-    CommentDeleteController.$inject = ['$uibModalInstance', 'entity', 'Comment'];
+    CommentDeleteController.$inject = ['$uibModalInstance', 'comment', 'Comment'];
 
-    function CommentDeleteController($uibModalInstance, entity, Comment) {
+    function CommentDeleteController($uibModalInstance, comment, Comment) {
         var vm = this;
 
-        vm.comment = entity;
+        vm.comment = comment;
         vm.clear = clear;
         vm.confirmDelete = confirmDelete;
         
