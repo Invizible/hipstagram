@@ -3,7 +3,9 @@ package com.github.invizible.hipstagram.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.github.invizible.hipstagram.domain.Comment;
 import com.github.invizible.hipstagram.repository.CommentRepository;
+import com.github.invizible.hipstagram.repository.UserRepository;
 import com.github.invizible.hipstagram.repository.search.CommentSearchRepository;
+import com.github.invizible.hipstagram.security.SecurityUtils;
 import com.github.invizible.hipstagram.web.rest.util.HeaderUtil;
 import com.github.invizible.hipstagram.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -22,10 +24,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 /**
  * REST controller for managing Comment.
@@ -41,6 +41,9 @@ public class CommentResource {
     
     @Inject
     private CommentSearchRepository commentSearchRepository;
+
+    @Inject
+    private UserRepository userRepository;
     
     /**
      * POST  /comments : Create a new comment.
@@ -53,11 +56,12 @@ public class CommentResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Comment> createComment(@Valid @RequestBody Comment comment) throws URISyntaxException {
+    public ResponseEntity<Comment> createComment(@RequestBody Comment comment) throws URISyntaxException {
         log.debug("REST request to save Comment : {}", comment);
         if (comment.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("comment", "idexists", "A new comment cannot already have an ID")).body(null);
         }
+        comment.setAuthor(userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get());
         Comment result = commentRepository.save(comment);
         commentSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/comments/" + result.getId()))

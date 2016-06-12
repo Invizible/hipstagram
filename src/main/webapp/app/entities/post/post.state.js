@@ -94,7 +94,6 @@
                                 text: null,
                                 photo: null,
                                 photoContentType: null,
-                                date: null,
                                 id: null
                             };
                         }

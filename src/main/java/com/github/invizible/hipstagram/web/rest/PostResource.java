@@ -3,7 +3,9 @@ package com.github.invizible.hipstagram.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.github.invizible.hipstagram.domain.Post;
 import com.github.invizible.hipstagram.repository.PostRepository;
+import com.github.invizible.hipstagram.repository.UserRepository;
 import com.github.invizible.hipstagram.repository.search.PostSearchRepository;
+import com.github.invizible.hipstagram.security.SecurityUtils;
 import com.github.invizible.hipstagram.web.rest.util.HeaderUtil;
 import com.github.invizible.hipstagram.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -22,10 +24,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 /**
  * REST controller for managing Post.
@@ -41,6 +41,9 @@ public class PostResource {
     
     @Inject
     private PostSearchRepository postSearchRepository;
+
+    @Inject
+    private UserRepository userRepository;
     
     /**
      * POST  /posts : Create a new post.
@@ -53,11 +56,12 @@ public class PostResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Post> createPost(@Valid @RequestBody Post post) throws URISyntaxException {
+    public ResponseEntity<Post> createPost(@RequestBody Post post) throws URISyntaxException {
         log.debug("REST request to save Post : {}", post);
         if (post.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("post", "idexists", "A new post cannot already have an ID")).body(null);
         }
+        post.setAuthor(userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get());
         Post result = postRepository.save(post);
         postSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/posts/" + result.getId()))

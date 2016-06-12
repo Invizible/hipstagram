@@ -5,9 +5,9 @@
         .module('hipstagramApp')
         .controller('CommentDialogController', CommentDialogController);
 
-    CommentDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'comment', 'Comment', 'Post', 'User'];
+    CommentDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'comment', 'Comment', 'Post', 'User', 'post'];
 
-    function CommentDialogController ($timeout, $scope, $stateParams, $uibModalInstance, comment, Comment, Post, User) {
+    function CommentDialogController ($timeout, $scope, $stateParams, $uibModalInstance, comment, Comment, Post, User, post) {
         var vm = this;
 
         vm.comment = comment;
@@ -31,6 +31,7 @@
             if (vm.comment.id !== null) {
                 Comment.update(vm.comment, onSaveSuccess, onSaveError);
             } else {
+                vm.comment.post = post;
                 Comment.save(vm.comment, onSaveSuccess, onSaveError);
             }
         }

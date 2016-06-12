@@ -32,7 +32,7 @@ public class Comment implements Serializable {
 
     @NotNull
     @Column(name = "date", nullable = false)
-    private ZonedDateTime date;
+    private ZonedDateTime date = ZonedDateTime.now();
 
     @ManyToOne
     private Post post;

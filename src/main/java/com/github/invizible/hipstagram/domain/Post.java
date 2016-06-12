@@ -41,7 +41,7 @@ public class Post implements Serializable {
 
     @NotNull
     @Column(name = "date", nullable = false)
-    private ZonedDateTime date;
+    private ZonedDateTime date = ZonedDateTime.now();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)

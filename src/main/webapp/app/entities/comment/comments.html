@@ -35,22 +35,16 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
-                    <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="text"><span translate="hipstagramApp.comment.text">Text</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="date"><span translate="hipstagramApp.comment.date">Date</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="post.id"><span translate="hipstagramApp.comment.post">Post</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="text"><span translate="hipstagramApp.comment.text">Text</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="author.login"><span translate="hipstagramApp.comment.author">Author</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="comment in vm.comments track by comment.id">
-                    <td><a ui-sref="comment-detail({commentId:comment.id})">{{comment.id}}</a></td>
-                    <td>{{comment.text}}</td>
                     <td>{{comment.date | date:'medium'}}</td>
-                    <td>
-                        <a ui-sref="post-detail({commentId:comment.post.id})">{{comment.post.id}}</a>
-                    </td>
+                    <td>{{comment.text}}</td>
                     <td>
                         {{comment.author.login}}
                     </td>

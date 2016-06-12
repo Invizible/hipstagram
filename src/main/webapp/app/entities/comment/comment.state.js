@@ -56,7 +56,7 @@
             data: {
                 authorities: ['ROLE_USER']
             },
-            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+            onEnter: ['$stateParams', '$state', '$uibModal', 'post', function($stateParams, $state, $uibModal, post) {
                 $uibModal.open({
                     templateUrl: 'app/entities/comment/comment-dialog.html',
                     controller: 'CommentDialogController',
@@ -67,10 +67,10 @@
                         comment: function () {
                             return {
                                 text: null,
-                                date: null,
                                 id: null
                             };
-                        }
+                        },
+                        post: post
                     }
                 }).result.then(function() {
                     $state.go('post-detail.comment', null, { reload: true });
@@ -85,7 +85,7 @@
             data: {
                 authorities: ['ROLE_USER']
             },
-            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+            onEnter: ['$stateParams', '$state', '$uibModal', 'post', function($stateParams, $state, $uibModal, post) {
                 $uibModal.open({
                     templateUrl: 'app/entities/comment/comment-dialog.html',
                     controller: 'CommentDialogController',
@@ -95,7 +95,8 @@
                     resolve: {
                         comment: ['Comment', function(Comment) {
                             return Comment.get({id : $stateParams.commentId}).$promise;
-                        }]
+                        }],
+                        post: post
                     }
                 }).result.then(function() {
                     $state.go('post-detail.comment', null, { reload: true });
