@@ -1,0 +1,28 @@
+{
+    "hipstagramApp": {
+        "post" : {
+            "home": {
+                "title": "Posts",
+                "createLabel": "Создать новый Post",
+                "createOrEditLabel": "Создать или отредактировать Post",
+                "search": "Найти Post"
+            },
+            "created": "Новый Post создан с идентификатором {{ param }}",
+            "updated": "Post обновлен с идентификатором {{ param }}",
+            "deleted": "Post удален с идентификатором {{ param }}",
+            "delete": {
+                "question": "Вы уверены что хотите удалить Post {{ id }}?"
+            },
+            "detail": {
+                "title": "Post"
+            },
+            "text": "Text",
+            "photo": "Photo",
+            "date": "Date",
+            "tag": "Tag",
+            "author": "Author",
+            "likes": "Likes",
+            "comment": "Comment"
+        }
+    }
+}
