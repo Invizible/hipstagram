@@ -14,8 +14,10 @@
         vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
         vm.transition = transition;
+        vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.clear = clear;
         vm.search = search;
+        vm.loadAll = loadAll;
         vm.searchQuery = pagingParams.search;
         vm.currentSearch = pagingParams.search;
 
@@ -26,13 +28,13 @@
                 CommentSearch.query({
                     query: pagingParams.search,
                     page: pagingParams.page - 1,
-                    size: paginationConstants.itemsPerPage,
+                    size: vm.itemsPerPage,
                     sort: sort()
                 }, onSuccess, onError);
             } else {
                 Comment.query({
                     page: pagingParams.page - 1,
-                    size: paginationConstants.itemsPerPage,
+                    size: vm.itemsPerPage,
                     sort: sort()
                 }, onSuccess, onError);
             }

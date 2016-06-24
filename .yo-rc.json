@@ -1,6 +1,6 @@
 {
   "generator-jhipster": {
-    "jhipsterVersion": "3.4.0",
+    "jhipsterVersion": "3.4.2",
     "baseName": "hipstagram",
     "packageName": "com.github.invizible.hipstagram",
     "packageFolder": "com/github/invizible/hipstagram",

@@ -6,6 +6,7 @@ import com.github.invizible.hipstagram.repository.AuthorityRepository;
 import com.github.invizible.hipstagram.repository.PersistentTokenRepository;
 import com.github.invizible.hipstagram.repository.UserRepository;
 import com.github.invizible.hipstagram.repository.search.UserSearchRepository;
+import com.github.invizible.hipstagram.security.AuthoritiesConstants;
 import com.github.invizible.hipstagram.security.SecurityUtils;
 import com.github.invizible.hipstagram.service.util.RandomUtil;
 import com.github.invizible.hipstagram.web.rest.dto.ManagedUserDTO;
@@ -94,7 +95,7 @@ public class UserService {
         String langKey) {
 
         User newUser = new User();
-        Authority authority = authorityRepository.findOne("ROLE_USER");
+        Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
         Set<Authority> authorities = new HashSet<>();
         String encryptedPassword = passwordEncoder.encode(password);
         newUser.setLogin(login);
