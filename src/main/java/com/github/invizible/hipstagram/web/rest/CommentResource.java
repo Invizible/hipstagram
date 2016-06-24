@@ -49,7 +49,7 @@ public class CommentResource {
 
     @Inject
     private UserRepository userRepository;
-    
+
     /**
      * POST  /comments : Create a new comment.
      *
@@ -201,5 +201,6 @@ public class CommentResource {
         HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/comments");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
+
 
 }
